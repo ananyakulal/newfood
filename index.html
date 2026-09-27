@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hostel Food Count</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+/* HEADER */
+header {
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+header p {
+    opacity: 0.9;
+}
+
+/* MAIN */
+.container {
+    width: 95%;
+    max-width: 1400px;
+    margin: 25px auto;
+}
+
+/* SUMMARY */
+.summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.card h3 {
+    color: #64748b;
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.card .number {
+    font-size: 30px;
+    font-weight: bold;
+    color: #2563eb;
+}
+
+/* FORM */
+.form-box,
+.food-count,
+.student-section {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+}
+
+.form-box h2,
+.food-count h2,
+.student-section h2 {
+    color: #1e3a8a;
+    margin-bottom: 20px;
+}
+
+/* INPUTS */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input,
+select {
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: #2563eb;
+}
+
+/* MEALS */
+.meal-section {
+    margin-top: 25px;
+}
+
+.meal-section h3 {
+    margin-bottom: 12px;
+    color: #334155;
+}
+
+.meal-options {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.meal-option {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.meal-option:hover {
+    background: #eff6ff;
+}
+
+.meal-option input {
+    margin-right: 7px;
+}
+
+/* DINNER OPTIONS */
+.dinner-box {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+/* BUTTONS */
+.button-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    padding: 12px 22px;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.add-btn {
+    background: #2563eb;
+    color: white;
+}
+
+.add-btn:hover {
+    background: #1d4ed8;
+}
+
+.clear-btn {
+    background: #ef4444;
+    color: white;
+}
+
+.clear-btn:hover {
+    background: #dc2626;
+}
+
+.edit-btn {
+    background: #f59e0b;
+    color: white;
+    padding: 7px 12px;
+    font-size: 13px;
+    margin-right: 5px;
+}
+
+.delete-btn {
+    background: #ef4444;
+    color: white;
+    padding: 7px 12px;
+    font-size: 13px;
+}
+
+/* FOOD COUNTS */
+.food-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.food-card {
+    padding: 18px;
+    border-radius: 10px;
+    background: #f8fafc;
+    border-left: 5px solid #2563eb;
+}
+
+.food-card h3 {
+    margin-bottom: 10px;
+}
+
+.food-card p {
+    margin: 6px 0;
+    color: #475569;
+}
+
+.food-card strong {
+    color: #1e293b;
+}
+
+/* STUDENT HEADER */
+.student-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.search {
+    width: 280px;
+}
+
+/* TABLE */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1300px;
+}
+
+th {
+    background: #1e3a8a;
+    color: white;
+    padding: 13px;
+    text-align: center;
+}
+
+td {
+    padding: 11px;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+tr:hover {
+    background: #f8fafc;
+}
+
+.yes {
+    color: #16a34a;
+    font-weight: bold;
+}
+
+.no {
+    color: #94a3b8;
+}
+
+.empty {
+    text-align: center;
+    padding: 30px;
+    color: #64748b;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+
+    .summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .food-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    .summary {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .food-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .student-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search {
+        width: 100%;
+    }
+
+    .button-row {
+        flex-direction: column;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>🍽️ Hostel Food Count</h1>
+    <p>Daily Student Food Requirement Management</p>
+</header>
+
+<div class="container">
+
+<!-- ================= SUMMARY ================= -->
+
+<div class="summary">
+
+```
+<div class="card">
+    <h3>Total Students</h3>
+    <div class="number" id="totalStudents">0</div>
+</div>
+
+<div class="card">
+    <h3>Morning Tea</h3>
+    <div class="number" id="totalMorningTea">0</div>
+</div>
+
+<div class="card">
+    <h3>Breakfast</h3>
+    <div class="number" id="totalBreakfast">0</div>
+</div>
+
+<div class="card">
+    <h3>Lunch</h3>
+    <div class="number" id="totalLunch">0</div>
+</div>
+
+<div class="card">
+    <h3>Snacks</h3>
+    <div class="number" id="totalSnacks">0</div>
+</div>
+
+<div class="card">
+    <h3>Evening Tea</h3>
+    <div class="number" id="totalEveningTea">0</div>
+</div>
+
+<div class="card">
+    <h3>Dinner</h3>
+    <div class="number" id="totalDinner">0</div>
+</div>
+
+<div class="card">
+    <h3>Sweet</h3>
+    <div class="number" id="totalSweet">0</div>
+</div>
+```
+
+</div>
+
+<!-- ================= STUDENT FORM ================= -->
+
+<div class="form-box">
+
+```
+<h2 id="formTitle">➕ Add Student Food Requirement</h2>
+
+<div class="form-grid">
+
+    <div class="input-group">
+        <label>Student Name *</label>
+        <input
+            type="text"
+            id="studentName"
+            placeholder="Enter student name"
+        >
+    </div>
+
+    <div class="input-group">
+        <label>Room Number *</label>
+        <input
+            type="text"
+            id="roomNumber"
+            placeholder="Example: 204"
+        >
+    </div>
+
+</div>
+
+
+<!-- MORNING TEA -->
+
+<div class="meal-section">
+
+    <h3>🌅 Morning Tea</h3>
+
+    <div class="meal-options">
+
+        <label class="meal-option">
+            <input type="checkbox" id="morningTea">
+            ☕ Morning Tea
+        </label>
+
+    </div>
+
+</div>
+
+
+<!-- BREAKFAST -->
+
+<div class="meal-section">
+
+    <h3>🍳 Breakfast</h3>
+
+    <div class="meal-options">
+
+        <label class="meal-option">
+            <input type="checkbox" id="breakfast">
+            🍳 Breakfast
+        </label>
+
+    </div>
+
+</div>
+
+
+<!-- LUNCH -->
+
+<div class="meal-section">
+
+    <h3>🍛 Lunch</h3>
+
+    <div class="meal-options">
+
+        <label class="meal-option">
+            <input
+                type="radio"
+                name="lunchType"
+                value="Dining Hall"
+                checked
+            >
+            🍛 Dining Hall
+        </label>
+
+        <label class="meal-option">
+            <input
+                type="radio"
+                name="lunchType"
+                value="Tiffin Box"
+            >
+            📦 Tiffin Box
+        </label>
+
+    </div>
+
+</div>
+
+
+<!-- LUNCH REQUIRED -->
+
+<div class="meal-section">
+
+    <label class="meal-option">
+        <input type="checkbox" id="lunch">
+        ✓ Lunch Required
+    </label>
+
+</div>
+
+
+<!-- SNACKS -->
+
+<div class="meal-section">
+
+    <h3>🍪 Snacks</h3>
+
+    <div class="meal-options">
+
+        <label class="meal-option">
+            <input type="checkbox" id="snacks">
+            🍪 Snacks
+        </label>
+
+    </div>
+
+</div>
+
+
+<!-- EVENING TEA -->
+
+<div class="meal-section">
+
+    <h3>☕ Evening Tea</h3>
+
+    <div class="meal-options">
+
+        <label class="meal-option">
+            <input type="checkbox" id="eveningTea">
+            ☕ Evening Tea
+        </label>
+
+    </div>
+
+</div>
+
+
+<!-- DINNER -->
+
+<div class="meal-section">
+
+    <h3>🍽️ Dinner</h3>
+
+    <div class="meal-options">
+
+        <label class="meal-option">
+            <input type="checkbox" id="dinner">
+            🍽️ Dinner Required
+        </label>
+
+    </div>
+
+
+    <div class="dinner-box">
+
+        <h3>Dinner Food Type</h3>
+
+        <div class="meal-options">
+
+            <label class="meal-option">
+                <input
+                    type="radio"
+                    name="dinnerType"
+                    value="Veg"
+                    checked
+                >
+                🥗 Veg
+            </label>
+
+            <label class="meal-option">
+                <input
+                    type="radio"
+                    name="dinnerType"
+                    value="Non-Veg"
+                >
+                🍗 Non-Veg
+            </label>
+
+        </div>
+
+
+        <h3 style="margin-top:15px;">Sweet</h3>
+
+        <div class="meal-options">
+
+            <label class="meal-option">
+                <input type="checkbox" id="sweet">
+                🍰 Sweet
+            </label>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- BUTTONS -->
+
+<div class="button-row">
+
+    <button
+        class="add-btn"
+        id="saveButton"
+        onclick="saveStudent()"
+    >
+        ➕ Add Student
+    </button>
+
+    <button
+        class="clear-btn"
+        onclick="clearForm()"
+    >
+        Clear Form
+    </button>
+
+</div>
+```
+
+</div>
+
+<!-- ================= FOOD COUNT ================= -->
+
+<div class="food-count">
+
+```
+<h2>📊 Today's Food Count</h2>
+
+<div class="food-grid">
+
+    <!-- MORNING TEA -->
+
+    <div class="food-card">
+
+        <h3>☕ Morning Tea</h3>
+
+        <p>
+            Total:
+            <strong id="morningTeaCount">0</strong>
+        </p>
+
+    </div>
+
+
+    <!-- BREAKFAST -->
+
+    <div class="food-card">
+
+        <h3>🍳 Breakfast</h3>
+
+        <p>
+            Total:
+            <strong id="breakfastCount">0</strong>
+        </p>
+
+    </div>
+
+
+    <!-- LUNCH -->
+
+    <div class="food-card">
+
+        <h3>🍛 Lunch</h3>
+
+        <p>
+            Total:
+            <strong id="lunchCount">0</strong>
+        </p>
+
+        <p>
+            Dining Hall:
+            <strong id="diningCount">0</strong>
+        </p>
+
+        <p>
+            Tiffin Box:
+            <strong id="tiffinCount">0</strong>
+        </p>
+
+    </div>
+
+
+    <!-- SNACKS -->
+
+    <div class="food-card">
+
+        <h3>🍪 Snacks</h3>
+
+        <p>
+            Total:
+            <strong id="snacksCount">0</strong>
+        </p>
+
+    </div>
+
+
+    <!-- EVENING TEA -->
+
+    <div class="food-card">
+
+        <h3>☕ Evening Tea</h3>
+
+        <p>
+            Total:
+            <strong id="eveningTeaCount">0</strong>
+        </p>
+
+    </div>
+
+
+    <!-- DINNER -->
+
+    <div class="food-card">
+
+        <h3>🍽️ Dinner</h3>
+
+        <p>
+            Total:
+            <strong id="dinnerCount">0</strong>
+        </p>
+
+        <p>
+            Veg:
+            <strong id="dinnerVeg">0</strong>
+        </p>
+
+        <p>
+            Non-Veg:
+            <strong id="dinnerNonVeg">0</strong>
+        </p>
+
+    </div>
+
+
+    <!-- SWEET -->
+
+    <div class="food-card">
+
+        <h3>🍰 Sweet</h3>
+
+        <p>
+            Total:
+            <strong id="sweetCount">0</strong>
+        </p>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<!-- ================= STUDENT LIST ================= -->
+
+<div class="student-section">
+
+```
+<div class="student-header">
+
+    <h2>👨‍🎓 Student List</h2>
+
+    <input
+        class="search"
+        type="text"
+        id="search"
+        placeholder="🔍 Search student..."
+        onkeyup="displayStudents()"
+    >
+
+</div>
+
+
+<div class="table-container">
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Room</th>
+                <th>Morning Tea</th>
+                <th>Breakfast</th>
+                <th>Lunch</th>
+                <th>Lunch Type</th>
+                <th>Snacks</th>
+                <th>Evening Tea</th>
+                <th>Dinner</th>
+                <th>Dinner Type</th>
+                <th>Sweet</th>
+                <th>Action</th>
+            </tr>
+
+        </thead>
+
+        <tbody id="studentTable"></tbody>
+
+    </table>
+
+</div>
+```
+
+</div>
+
+</div>
+
+<script>
+
+/* =========================================================
+   DATA
+========================================================= */
+
+let students =
+    JSON.parse(localStorage.getItem("hostelFoodStudents")) || [];
+
+let editingId = null;
+
+
+/* =========================================================
+   SAVE STUDENT
+========================================================= */
+
+function saveStudent() {
+
+    const name =
+        document.getElementById("studentName").value.trim();
+
+    const room =
+        document.getElementById("roomNumber").value.trim();
+
+    const morningTea =
+        document.getElementById("morningTea").checked;
+
+    const breakfast =
+        document.getElementById("breakfast").checked;
+
+    const lunch =
+        document.getElementById("lunch").checked;
+
+    const snacks =
+        document.getElementById("snacks").checked;
+
+    const eveningTea =
+        document.getElementById("eveningTea").checked;
+
+    const dinner =
+        document.getElementById("dinner").checked;
+
+    const sweet =
+        document.getElementById("sweet").checked;
+
+
+    const lunchType =
+        document.querySelector(
+            'input[name="lunchType"]:checked'
+        ).value;
+
+
+    const dinnerType =
+        document.querySelector(
+            'input[name="dinnerType"]:checked'
+        ).value;
+
+
+    /* VALIDATION */
+
+    if (name === "") {
+
+        alert("Please enter student name.");
+
+        return;
+    }
+
+
+    if (room === "") {
+
+        alert("Please enter room number.");
+
+        return;
+    }
+
+
+    if (
+        !morningTea &&
+        !breakfast &&
+        !lunch &&
+        !snacks &&
+        !eveningTea &&
+        !dinner
+    ) {
+
+        alert("Please select at least one food requirement.");
+
+        return;
+    }
+
+
+    /* STUDENT OBJECT */
+
+    const student = {
+
+        id: editingId || Date.now(),
+
+        name: name,
+
+        room: room,
+
+        morningTea: morningTea,
+
+        breakfast: breakfast,
+
+        lunch: lunch,
+
+        lunchType: lunchType,
+
+        snacks: snacks,
+
+        eveningTea: eveningTea,
+
+        dinner: dinner,
+
+        dinnerType: dinnerType,
+
+        sweet: dinner ? sweet : false
+
+    };
+
+
+    /* EDIT */
+
+    if (editingId !== null) {
+
+        const index =
+            students.findIndex(
+                s => s.id === editingId
+            );
+
+        if (index !== -1) {
+
+            students[index] = student;
+
+        }
+
+        editingId = null;
+
+        document.getElementById("saveButton")
+            .textContent = "➕ Add Student";
+
+        document.getElementById("formTitle")
+            .textContent =
+            "➕ Add Student Food Requirement";
+
+    }
+
+    /* ADD */
+
+    else {
+
+        students.push(student);
+
+    }
+
+
+    /* SAVE */
+
+    localStorage.setItem(
+        "hostelFoodStudents",
+        JSON.stringify(students)
+    );
+
+
+    clearForm();
+
+    displayStudents();
+
+    updateCounts();
+
+}
+
+
+/* =========================================================
+   DISPLAY STUDENTS
+========================================================= */
+
+function displayStudents() {
+
+    const table =
+        document.getElementById("studentTable");
+
+    const search =
+        document.getElementById("search")
+            .value
+            .toLowerCase();
+
+
+    table.innerHTML = "";
+
+
+    const filteredStudents =
+        students.filter(student =>
+            student.name
+                .toLowerCase()
+                .includes(search)
+        );
+
+
+    if (filteredStudents.length === 0) {
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="13" class="empty">
+                    No students found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    filteredStudents.forEach(
+        (student, index) => {
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+
+            <td>${index + 1}</td>
+
+            <td>
+                <strong>
+                    ${escapeHTML(student.name)}
+                </strong>
+            </td>
+
+            <td>
+                ${escapeHTML(student.room || "-")}
+            </td>
+
+            <td>
+                ${yesNo(student.morningTea)}
+            </td>
+
+            <td>
+                ${yesNo(student.breakfast)}
+            </td>
+
+            <td>
+                ${yesNo(student.lunch)}
+            </td>
+
+            <td>
+                ${
+                    student.lunch
+                    ? student.lunchType
+                    : "-"
+                }
+            </td>
+
+            <td>
+                ${yesNo(student.snacks)}
+            </td>
+
+            <td>
+                ${yesNo(student.eveningTea)}
+            </td>
+
+            <td>
+                ${yesNo(student.dinner)}
+            </td>
+
+            <td>
+                ${
+                    student.dinner
+                    ? student.dinnerType
+                    : "-"
+                }
+            </td>
+
+            <td>
+                ${
+                    student.sweet
+                    ? '<span class="yes">✓ Yes</span>'
+                    : '<span class="no">No</span>'
+                }
+            </td>
+
+            <td>
+
+                <button
+                    class="edit-btn"
+                    onclick="editStudent(${student.id})"
+                >
+                    Edit
+                </button>
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteStudent(${student.id})"
+                >
+                    Delete
+                </button>
+
+            </td>
+
+        `;
+
+
+        table.appendChild(row);
+
+    });
+
+}
+
+
+/* =========================================================
+   YES / NO
+========================================================= */
+
+function yesNo(value) {
+
+    return value
+        ? '<span class="yes">✓ Yes</span>'
+        : '<span class="no">No</span>';
+
+}
+
+
+/* =========================================================
+   EDIT STUDENT
+========================================================= */
+
+function editStudent(id) {
+
+    const student =
+        students.find(
+            s => s.id === id
+        );
+
+
+    if (!student) {
+        return;
+    }
+
+
+    editingId = id;
+
+
+    document.getElementById("studentName")
+        .value = student.name;
+
+    document.getElementById("roomNumber")
+        .value = student.room;
+
+
+    document.getElementById("morningTea")
+        .checked = student.morningTea;
+
+    document.getElementById("breakfast")
+        .checked = student.breakfast;
+
+    document.getElementById("lunch")
+        .checked = student.lunch;
+
+    document.getElementById("snacks")
+        .checked = student.snacks;
+
+    document.getElementById("eveningTea")
+        .checked = student.eveningTea;
+
+    document.getElementById("dinner")
+        .checked = student.dinner;
+
+    document.getElementById("sweet")
+        .checked = student.sweet;
+
+
+    document.querySelector(
+        `input[name="lunchType"][value="${student.lunchType}"]`
+    ).checked = true;
+
+
+    document.querySelector(
+        `input[name="dinnerType"][value="${student.dinnerType}"]`
+    ).checked = true;
+
+
+    document.getElementById("saveButton")
+        .textContent = "💾 Update Student";
+
+
+    document.getElementById("formTitle")
+        .textContent =
+        "✏️ Edit Student Food Requirement";
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =========================================================
+   DELETE STUDENT
+========================================================= */
+
+function deleteStudent(id) {
+
+    if (
+        !confirm(
+            "Delete this student's entry?"
+        )
+    ) {
+        return;
+    }
+
+
+    students =
+        students.filter(
+            student => student.id !== id
+        );
+
+
+    localStorage.setItem(
+        "hostelFoodStudents",
+        JSON.stringify(students)
+    );
+
+
+    displayStudents();
+
+    updateCounts();
+
+}
+
+
+/* =========================================================
+   UPDATE COUNTS
+========================================================= */
+
+function updateCounts() {
+
+    document.getElementById("totalStudents")
+        .textContent = students.length;
+
+
+    /* MORNING TEA */
+
+    const morningTea =
+        students.filter(
+            s => s.morningTea
+        );
+
+    document.getElementById("totalMorningTea")
+        .textContent =
+        morningTea.length;
+
+    document.getElementById("morningTeaCount")
+        .textContent =
+        morningTea.length;
+
+
+    /* BREAKFAST */
+
+    const breakfast =
+        students.filter(
+            s => s.breakfast
+        );
+
+    document.getElementById("totalBreakfast")
+        .textContent =
+        breakfast.length;
+
+    document.getElementById("breakfastCount")
+        .textContent =
+        breakfast.length;
+
+
+    /* LUNCH */
+
+    const lunch =
+        students.filter(
+            s => s.lunch
+        );
+
+    document.getElementById("totalLunch")
+        .textContent =
+        lunch.length;
+
+    document.getElementById("lunchCount")
+        .textContent =
+        lunch.length;
+
+
+    const dining =
+        students.filter(
+            s =>
+                s.lunch &&
+                s.lunchType === "Dining Hall"
+        );
+
+    document.getElementById("diningCount")
+        .textContent =
+        dining.length;
+
+
+    const tiffin =
+        students.filter(
+            s =>
+                s.lunch &&
+                s.lunchType === "Tiffin Box"
+        );
+
+    document.getElementById("tiffinCount")
+        .textContent =
+        tiffin.length;
+
+
+    /* SNACKS */
+
+    const snacks =
+        students.filter(
+            s => s.snacks
+        );
+
+    document.getElementById("snacksCount")
+        .textContent =
+        snacks.length;
+
+
+    document.getElementById("totalSnacks")
+        .textContent =
+        snacks.length;
+
+
+    /* EVENING TEA */
+
+    const eveningTea =
+        students.filter(
+            s => s.eveningTea
+        );
+
+    document.getElementById("eveningTeaCount")
+        .textContent =
+        eveningTea.length;
+
+    document.getElementById("totalEveningTea")
+        .textContent =
+        eveningTea.length;
+
+
+    /* DINNER */
+
+    const dinner =
+        students.filter(
+            s => s.dinner
+        );
+
+    document.getElementById("dinnerCount")
+        .textContent =
+        dinner.length;
+
+    document.getElementById("totalDinner")
+        .textContent =
+        dinner.length;
+
+
+    const dinnerVeg =
+        students.filter(
+            s =>
+                s.dinner &&
+                s.dinnerType === "Veg"
+        );
+
+    document.getElementById("dinnerVeg")
+        .textContent =
+        dinnerVeg.length;
+
+
+    const dinnerNonVeg =
+        students.filter(
+            s =>
+                s.dinner &&
+                s.dinnerType === "Non-Veg"
+        );
+
+    document.getElementById("dinnerNonVeg")
+        .textContent =
+        dinnerNonVeg.length;
+
+
+    /* SWEET */
+
+    const sweet =
+        students.filter(
+            s =>
+                s.dinner &&
+                s.sweet
+        );
+
+    document.getElementById("sweetCount")
+        .textContent =
+        sweet.length;
+
+    document.getElementById("totalSweet")
+        .textContent =
+        sweet.length;
+
+}
+
+
+/* =========================================================
+   CLEAR FORM
+========================================================= */
+
+function clearForm() {
+
+    document.getElementById("studentName")
+        .value = "";
+
+    document.getElementById("roomNumber")
+        .value = "";
+
+
+    document.getElementById("morningTea")
+        .checked = false;
+
+    document.getElementById("breakfast")
+        .checked = false;
+
+    document.getElementById("lunch")
+        .checked = false;
+
+    document.getElementById("snacks")
+        .checked = false;
+
+    document.getElementById("eveningTea")
+        .checked = false;
+
+    document.getElementById("dinner")
+        .checked = false;
+
+    document.getElementById("sweet")
+        .checked = false;
+
+
+    document.querySelector(
+        'input[name="lunchType"][value="Dining Hall"]'
+    ).checked = true;
+
+
+    document.querySelector(
+        'input[name="dinnerType"][value="Veg"]'
+    ).checked = true;
+
+
+    editingId = null;
+
+
+    document.getElementById("saveButton")
+        .textContent = "➕ Add Student";
+
+
+    document.getElementById("formTitle")
+        .textContent =
+        "➕ Add Student Food Requirement";
+
+}
+
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================================================
+   INITIAL LOAD
+========================================================= */
+
+displayStudents();
+
+updateCounts();
+
+</script>
+
+</body>
+</html>
